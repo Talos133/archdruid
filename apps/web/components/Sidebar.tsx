@@ -12,7 +12,7 @@ const NAV = [
 export function Sidebar() {
   const pathname = usePathname()
   return (
-    <aside className="glass flex flex-col gap-1 p-4 w-52 min-h-screen fixed left-0 top-0 z-10">
+    <aside className="glass flex flex-col gap-1 p-4 w-52 shrink-0 sticky top-0 h-screen z-10">
       <div className="flex items-center gap-2 mb-8 px-2">
         <span className="text-xl font-bold bg-gradient-to-r from-[#a78bfa] to-[#60a5fa] bg-clip-text text-transparent">
           Archdruid
