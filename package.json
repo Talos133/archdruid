@@ -6,7 +6,7 @@
   "bin": {
     "archdruid": "./bin/archdruid.mjs"
   },
-  "files": ["bin/", "packages/*/dist/", "apps/web/.next/"],
+  "files": ["bin/", "packages/core/dist/", "packages/mcp/dist/"],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
