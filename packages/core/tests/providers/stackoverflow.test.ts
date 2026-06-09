@@ -2,13 +2,14 @@ import { describe, it, expect, vi } from 'vitest'
 import { searchStackOverflow } from '../../src/providers/stackoverflow.js'
 
 vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+  ok: true,
   json: async () => ({
     items: [
       {
         question_id: 11828004,
         title: 'How to retry a fetch request in TypeScript?',
         link: 'https://stackoverflow.com/questions/11828004',
-        body_markdown: 'I want to retry a failed fetch...',
+        body: 'I want to retry a failed fetch...',
         score: 42,
         view_count: 15000,
         answer_count: 3,

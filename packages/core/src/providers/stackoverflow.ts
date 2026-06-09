@@ -1,3 +1,4 @@
+// packages/core/src/providers/stackoverflow.ts
 import type { Result, DateRange } from '../types.js'
 import { makeStructuredId } from '../id.js'
 import { computeScore } from '../score.js'
@@ -7,6 +8,10 @@ interface SOOptions {
   key: string
   maxResults: number
   dateRange?: DateRange | 'all'
+}
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
 export async function searchStackOverflow(query: string, opts: SOOptions): Promise<Result[]> {
@@ -28,16 +33,20 @@ export async function searchStackOverflow(query: string, opts: SOOptions): Promi
   }
 
   const res = await fetch(`https://api.stackexchange.com/2.3/search/advanced?${params}`)
-  const data = await res.json() as { items: Record<string, unknown>[] }
+  if (!res.ok) return []
 
-  return data.items.map(item => {
+  const data = await res.json() as { items?: Record<string, unknown>[] }
+  const items = data.items ?? []
+
+  return items.map(item => {
+    const bodyText = stripHtml(String(item.body ?? ''))
     const id = makeStructuredId('stackoverflow', 'question', String(item.question_id))
     const result: Result = {
       id,
       provider: 'stackoverflow',
       kind: 'question',
       title: String(item.title ?? ''),
-      summary: String(item.body_markdown ?? '').slice(0, 400),
+      summary: bodyText.slice(0, 400),
       score: 0,
       metrics: {
         votes: Number(item.score ?? 0),
@@ -46,10 +55,10 @@ export async function searchStackOverflow(query: string, opts: SOOptions): Promi
       },
       links: { html: String(item.link ?? '') },
       timestamps: {
-        published: new Date(Number(item.creation_date) * 1000),
+        published: item.creation_date ? new Date(Number(item.creation_date) * 1000) : null,
         updated: new Date(Number(item.last_activity_date) * 1000),
       },
-      evidence: [{ snippet: String(item.body_markdown ?? '').slice(0, 300) }],
+      evidence: [{ snippet: bodyText.slice(0, 300) }],
       attribution: { source: 'stackoverflow', method: 'api' },
     }
     result.score = computeScore(result, query)
