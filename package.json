@@ -1,0 +1,22 @@
+{
+  "name": "archdruid",
+  "version": "0.1.0",
+  "description": "Local MCP server for developer knowledge retrieval",
+  "private": false,
+  "bin": {
+    "archdruid": "./bin/archdruid.mjs"
+  },
+  "files": ["bin/", "packages/*/dist/", "apps/web/.next/"],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "start": "node bin/archdruid.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": { "node": ">=20" }
+}
