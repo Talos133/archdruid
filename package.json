@@ -6,7 +6,11 @@
   "bin": {
     "archdruid": "./bin/archdruid.mjs"
   },
-  "files": ["bin/", "packages/core/dist/", "packages/mcp/dist/"],
+  "files": [
+    "bin/",
+    "packages/core/dist/",
+    "packages/mcp/dist/"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -18,5 +22,8 @@
     "turbo": "^2.0.0",
     "typescript": "^5.4.0"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@11.5.2"
 }
