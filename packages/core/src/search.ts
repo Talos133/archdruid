@@ -66,7 +66,7 @@ export async function search(query: string, opts: SearchOptions = {}): Promise<R
     sources,
     resultCount: results.length,
     durationMs: Date.now() - t0,
-    calledFrom: 'mcp',
+    calledFrom: opts.calledFrom ?? 'mcp',
   })
 
   return results

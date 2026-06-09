@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json() as { query: string; options?: SearchOptions }
     if (!body.query) return NextResponse.json({ error: 'query required' }, { status: 400 })
-    const results = await search(body.query, body.options)
+    const results = await search(body.query, { ...body.options, calledFrom: 'web' })
     return NextResponse.json(results)
   } catch (err) {
     return NextResponse.json({ error: String(err) }, { status: 500 })

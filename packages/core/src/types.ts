@@ -12,6 +12,7 @@ export interface SearchOptions {
   language?: string
   minStars?: number
   dateRange?: DateRange | 'all'
+  calledFrom?: 'web' | 'mcp'
 }
 
 export interface Result {
